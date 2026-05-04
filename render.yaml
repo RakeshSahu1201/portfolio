@@ -1,0 +1,41 @@
+previews:
+  generation: automatic
+  expireAfterDays: 7
+
+services:
+  - type: web
+    name: portfolio-api
+    runtime: node
+    rootDir: backend
+    region: oregon
+    plan: free
+    autoDeployTrigger: checksPass
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    buildFilter:
+      paths:
+        - backend/**
+    previews:
+      generation: automatic
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: EMAIL_SERVICE
+        value: gmail
+      - key: EMAIL_FROM
+        sync: false
+      - key: EMAIL_PASSWORD
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

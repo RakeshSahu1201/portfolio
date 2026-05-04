@@ -1,0 +1,100 @@
+{
+  "about": {
+    "name": "Rakesh Sahu",
+    "title": "Software Engineer",
+    "bio": "Backend Engineer with 3+ years of experience specializing in Go, Node.js, and microservices architecture. Proven track record of migrating legacy monoliths to high-performance Go APIs and building robust backend systems for real-time applications. Experienced in streamlining CI/CD pipelines and implementing secure authentication flows to accelerate release velocity.",
+    "email": "rakeshsahurcs1201@gmail.com",
+    "phone": "8305201883",
+    "location": "Bhopal, India",
+    "avatar": "",
+    "social": {
+      "github": "https://github.com/RakeshSahu1201",
+      "linkedin": "https://linkedin.com/in/rakeshsahu-1201"
+    },
+    "education": [
+      {
+        "institution": "Truba College of Science & Technology, Bhopal",
+        "degree": "Bachelor of Engineering",
+        "field": "Computer Science",
+        "start_date": "August 2020",
+        "end_date": "June 2024",
+        "grade": "CGPA: 7.0"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Languages",
+        "items": ["Go", "JavaScript (ES6+)", "Java"]
+      },
+      {
+        "category": "Backend & Frameworks",
+        "items": ["Node.js", "Express.js", "Gin", "Laravel"]
+      },
+      {
+        "category": "Frontend",
+        "items": ["React.js"]
+      },
+      {
+        "category": "Databases",
+        "items": ["PostgreSQL", "MongoDB", "MySQL", "Elasticsearch"]
+      },
+      {
+        "category": "DevOps & Cloud",
+        "items": ["Docker", "GitLab CI/CD", "GitHub Actions", "Linux (Ubuntu)", "Bash Scripting"]
+      },
+      {
+        "category": "Architecture & Tools",
+        "items": ["RESTful APIs", "Microservices", "WebSockets", "JWT", "Git", "n8n"]
+      }
+    ]
+  },
+  "projects": [
+    {
+      "title": "AI-Powered CI/CD Automation Pipeline",
+      "description": "Custom DevEx workflow that automates failed pipeline recovery, merge request commentary, and AI-assisted code review operations.",
+      "technologies": ["n8n", "GitLab Webhooks", "LLM APIs", "MCP Server"],
+      "images": [],
+      "link": "",
+      "github": "",
+      "order": 1
+    },
+    {
+      "title": "Polyglot Chat Architecture",
+      "description": "Scaled a Node.js chat system with Go microservices, Redis Pub/Sub, and JWT-aware WebSocket message fan-out.",
+      "technologies": ["Node.js", "Go", "Redis", "WebSockets"],
+      "images": [],
+      "link": "",
+      "github": "https://github.com/RakeshSahu1201",
+      "order": 2
+    }
+  ],
+  "experience": [
+    {
+      "company": "ZEST SOFTECH PVT. LTD.",
+      "location": "Remote",
+      "title": "Software Engineer",
+      "startDate": "2024-06-01",
+      "endDate": null,
+      "description": "Migrated legacy monolithic RESTful APIs from Laravel to Go, reducing average API response times by 80% and decreasing server resource consumption.\nIntegrated automated unit testing and linting into GitLab CI pipelines, preventing breaking changes from reaching production.\nReplaced legacy session management with modern token-based authentication protocols, securing endpoints across the application.\nBuilt a transactional email microservice capable of processing 1000 emails daily, facilitating reliable multi-module communication.",
+      "order": 1
+    },
+    {
+      "company": "UMPTEEN INNOVATION PVT. LTD.",
+      "location": "Bhopal",
+      "title": "MERN Stack Developer",
+      "startDate": "2023-05-01",
+      "endDate": "2024-04-01",
+      "description": "Developed backend services using Node.js and Express to power a real-time chat application and HR payroll platform.\nImplemented WebSocket connections to enable low-latency 1:1 and group messaging features, including typing indicators and read receipts.\nCreated secure authentication flows utilizing JWT and session-based strategies to enforce strict role-based access control for payroll systems.\nOptimized file uploading and streaming endpoints, supporting the efficient transfer of high-resolution media with minimal latency.",
+      "order": 2
+    },
+    {
+      "company": "A2INFOTECH PVT. LTD.",
+      "location": "Bhopal (Hybrid)",
+      "title": "Software Engineer Intern",
+      "startDate": "2022-06-01",
+      "endDate": "2023-04-01",
+      "description": "Collaborated with the development team to contribute to designing and developing software applications like Hospital Management Systems (HMS), Food Ordering Apps, and Tech-Quiz Applications in Java.\nAssisted in creating technical documentation in simpler ways for various technologies, including MERN (MongoDB, Express.js, React.js, Node.js), Python, Spring and ReactJS.",
+      "order": 3
+    }
+  ]
+}
