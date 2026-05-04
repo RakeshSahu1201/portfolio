@@ -32,6 +32,8 @@ Thumbs.db
 .idea/
 .vscode/
 .codex
+frontend/.vercel
+frontend/.env.local
 
 # Runtime / cache
 *.pid
