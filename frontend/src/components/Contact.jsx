@@ -74,6 +74,12 @@ const styles = {
     fontFamily: 'var(--font-mono)',
     fontSize: 13,
   },
+  fieldError: {
+    fontFamily: 'var(--font-mono)',
+    fontSize: 12,
+    color: 'var(--red)',
+    lineHeight: 1.5,
+  },
   successMessage: {
     background: 'rgba(52, 211, 153, 0.1)',
     border: '1px solid var(--green)',
@@ -93,7 +99,7 @@ export default function Contact() {
     subject: '',
     message: '',
   });
-  const { submitContact, loading, error, success } = useContact();
+  const { submitContact, loading, error, fieldErrors, success } = useContact();
   const [showMessage, setShowMessage] = useState(false);
 
   const handleChange = (e) => {
@@ -131,6 +137,7 @@ export default function Contact() {
               onFocus={e => e.currentTarget.style.borderColor = 'var(--accent)'}
               onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
             />
+            {fieldErrors.name && <div style={styles.fieldError}>{fieldErrors.name}</div>}
           </div>
 
           <div style={styles.group}>
@@ -147,6 +154,7 @@ export default function Contact() {
               onFocus={e => e.currentTarget.style.borderColor = 'var(--accent)'}
               onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
             />
+            {fieldErrors.email && <div style={styles.fieldError}>{fieldErrors.email}</div>}
           </div>
 
           <div style={styles.group}>
@@ -163,6 +171,7 @@ export default function Contact() {
               onFocus={e => e.currentTarget.style.borderColor = 'var(--accent)'}
               onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
             />
+            {fieldErrors.subject && <div style={styles.fieldError}>{fieldErrors.subject}</div>}
           </div>
 
           <div style={styles.group}>
@@ -178,6 +187,7 @@ export default function Contact() {
               onFocus={e => e.currentTarget.style.borderColor = 'var(--accent)'}
               onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
             />
+            {fieldErrors.message && <div style={styles.fieldError}>{fieldErrors.message}</div>}
           </div>
 
           <button

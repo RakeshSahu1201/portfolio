@@ -175,6 +175,7 @@ const splitLines = (value) => value
   .filter(Boolean);
 
 const joinLines = (value) => Array.isArray(value) ? value.join('\n') : '';
+const getFieldMessage = (error, field) => error?.fields?.[field] || '';
 
 const projectToForm = (project) => ({
   title: project.title || '',
@@ -294,10 +295,15 @@ function AdminDashboard({ onLogout }) {
   });
   const [feedback, setFeedback] = useState('');
   const [feedbackType, setFeedbackType] = useState('success');
+  const [aboutErrors, setAboutErrors] = useState({});
+  const [projectErrors, setProjectErrors] = useState({});
+  const [experienceErrors, setExperienceErrors] = useState({});
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [projectDraft, setProjectDraft] = useState(null);
+  const [projectDraftErrors, setProjectDraftErrors] = useState({});
   const [editingExperienceId, setEditingExperienceId] = useState(null);
   const [experienceDraft, setExperienceDraft] = useState(null);
+  const [experienceDraftErrors, setExperienceDraftErrors] = useState({});
 
   React.useEffect(() => {
     setAboutForm({
@@ -331,6 +337,7 @@ function AdminDashboard({ onLogout }) {
   const submitAbout = async (event) => {
     event.preventDefault();
     try {
+      setAboutErrors({});
       await updateAbout({
         title: aboutForm.title,
         bio: aboutForm.bio,
@@ -348,6 +355,7 @@ function AdminDashboard({ onLogout }) {
       });
       showFeedback('About section updated.');
     } catch (error) {
+      setAboutErrors(error.fields || {});
       showFeedback(error.message || 'Failed to update about section.', 'error');
     }
   };
@@ -355,6 +363,7 @@ function AdminDashboard({ onLogout }) {
   const submitProject = async (event) => {
     event.preventDefault();
     try {
+      setProjectErrors({});
       await addProject({
         title: projectForm.title,
         description: projectForm.description,
@@ -375,6 +384,7 @@ function AdminDashboard({ onLogout }) {
       });
       showFeedback('Project created.');
     } catch (error) {
+      setProjectErrors(error.fields || {});
       showFeedback(error.message || 'Failed to create project.', 'error');
     }
   };
@@ -382,6 +392,7 @@ function AdminDashboard({ onLogout }) {
   const submitExperience = async (event) => {
     event.preventDefault();
     try {
+      setExperienceErrors({});
       await addExperience({
         title: experienceForm.title,
         company: experienceForm.company,
@@ -400,6 +411,7 @@ function AdminDashboard({ onLogout }) {
       });
       showFeedback('Experience created.');
     } catch (error) {
+      setExperienceErrors(error.fields || {});
       showFeedback(error.message || 'Failed to create experience.', 'error');
     }
   };
@@ -418,6 +430,7 @@ function AdminDashboard({ onLogout }) {
     if (!projectDraft) return;
 
     try {
+      setProjectDraftErrors({});
       await updateProject(projectId, {
         title: projectDraft.title,
         description: projectDraft.description,
@@ -431,6 +444,7 @@ function AdminDashboard({ onLogout }) {
       setProjectDraft(null);
       showFeedback(`Project "${projectDraft.title}" saved.`);
     } catch (error) {
+      setProjectDraftErrors(error.fields || {});
       showFeedback(error.message || 'Failed to save project.', 'error');
     }
   };
@@ -449,6 +463,7 @@ function AdminDashboard({ onLogout }) {
     if (!experienceDraft) return;
 
     try {
+      setExperienceDraftErrors({});
       await updateExperience(itemId, {
         title: experienceDraft.title,
         company: experienceDraft.company,
@@ -461,6 +476,7 @@ function AdminDashboard({ onLogout }) {
       setExperienceDraft(null);
       showFeedback(`Experience "${experienceDraft.title}" saved.`);
     } catch (error) {
+      setExperienceDraftErrors(error.fields || {});
       showFeedback(error.message || 'Failed to save experience.', 'error');
     }
   };
@@ -507,6 +523,7 @@ function AdminDashboard({ onLogout }) {
                 onChange={(event) => setAboutForm((prev) => ({ ...prev, bio: event.target.value }))}
                 required
               />
+              {getFieldMessage({ fields: aboutErrors }, 'bio') && <div style={{ ...styles.message, ...styles.error }}>{aboutErrors.bio}</div>}
             </label>
             <div style={styles.row}>
               <label style={styles.label}>
@@ -556,6 +573,7 @@ function AdminDashboard({ onLogout }) {
             <label style={styles.label}>
               Description
               <textarea style={styles.textarea} value={projectForm.description} onChange={(event) => setProjectForm((prev) => ({ ...prev, description: event.target.value }))} required />
+              {getFieldMessage({ fields: projectErrors }, 'description') && <div style={{ ...styles.message, ...styles.error }}>{projectErrors.description}</div>}
             </label>
             <label style={styles.label}>
               Technologies
@@ -611,6 +629,7 @@ function AdminDashboard({ onLogout }) {
             <label style={styles.label}>
               Description
               <textarea style={styles.textarea} value={experienceForm.description} onChange={(event) => setExperienceForm((prev) => ({ ...prev, description: event.target.value }))} />
+              {getFieldMessage({ fields: experienceErrors }, 'description') && <div style={{ ...styles.message, ...styles.error }}>{experienceErrors.description}</div>}
             </label>
             <label style={styles.label}>
               Order
@@ -635,6 +654,7 @@ function AdminDashboard({ onLogout }) {
                   <label style={styles.label}>
                     Description
                     <textarea style={styles.textarea} value={projectDraft.description} onChange={(event) => setProjectDraft((prev) => ({ ...prev, description: event.target.value }))} />
+                    {getFieldMessage({ fields: projectDraftErrors }, 'description') && <div style={{ ...styles.message, ...styles.error }}>{projectDraftErrors.description}</div>}
                   </label>
                   <label style={styles.label}>
                     Technologies
@@ -716,6 +736,7 @@ function AdminDashboard({ onLogout }) {
                   <label style={styles.label}>
                     Description
                     <textarea style={styles.textarea} value={experienceDraft.description} onChange={(event) => setExperienceDraft((prev) => ({ ...prev, description: event.target.value }))} />
+                    {getFieldMessage({ fields: experienceDraftErrors }, 'description') && <div style={{ ...styles.message, ...styles.error }}>{experienceDraftErrors.description}</div>}
                   </label>
                   <label style={styles.label}>
                     Order

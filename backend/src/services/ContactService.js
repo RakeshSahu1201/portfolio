@@ -14,8 +14,9 @@ const createContactService = (db, cacheOps) => {
     
     // Pure function to send email notification
     const adminEmailData = {
-      to: process.env.EMAIL_FROM,
+      to: process.env.EMAIL_TO,
       subject: `Portfolio - New Contact: ${data.subject}`,
+      replyTo: data.email,
       html: `
         <h3>New Contact Message</h3>
         <p><strong>Name:</strong> ${data.name}</p>

@@ -31,11 +31,9 @@ services:
         sync: false
       - key: REDIS_URL
         sync: false
-      - key: EMAIL_SERVICE
-        value: gmail
-      - key: EMAIL_FROM
+      - key: RESEND_API_KEY
         sync: false
-      - key: EMAIL_PASSWORD
+      - key: EMAIL_FROM
         sync: false
       - key: FRONTEND_URL
         sync: false

@@ -35,6 +35,7 @@ const apiCall = async (endpoint, options = {}) => {
     const error = await response.json().catch(() => ({ error: 'Unknown error' }));
     const err = new Error(error.error || `HTTP ${response.status}`);
     err.status = response.status;
+    err.fields = error.fields || {};
     throw err;
   }
 
@@ -227,11 +228,13 @@ export const useAbout = () => {
 export const useContact = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [success, setSuccess] = useState(false);
 
   const submitContact = useCallback(async (contactData) => {
     setLoading(true);
     setError(null);
+    setFieldErrors({});
     setSuccess(false);
 
     try {
@@ -244,13 +247,14 @@ export const useContact = () => {
     } catch (err) {
       console.error('Failed to submit contact:', err);
       setError(err.message);
+      setFieldErrors(err.fields || {});
       return false;
     } finally {
       setLoading(false);
     }
   }, []);
 
-  return { submitContact, loading, error, success };
+  return { submitContact, loading, error, fieldErrors, success };
 };
 
 /**
