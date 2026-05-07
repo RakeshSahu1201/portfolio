@@ -176,6 +176,17 @@ const splitLines = (value) => value
 
 const joinLines = (value) => Array.isArray(value) ? value.join('\n') : '';
 const getFieldMessage = (error, field) => error?.fields?.[field] || '';
+const formatApiErrorMessage = (error, fallback) => {
+  if (error?.fields && Object.keys(error.fields).length > 0) {
+    return Object.values(error.fields).join(' ');
+  }
+
+  if (error?.message && error.message !== 'Validation failed') {
+    return error.message;
+  }
+
+  return fallback;
+};
 
 const projectToForm = (project) => ({
   title: project.title || '',
@@ -356,7 +367,7 @@ function AdminDashboard({ onLogout }) {
       showFeedback('About section updated.');
     } catch (error) {
       setAboutErrors(error.fields || {});
-      showFeedback(error.message || 'Failed to update about section.', 'error');
+      showFeedback(formatApiErrorMessage(error, 'Failed to update about section.'), 'error');
     }
   };
 
@@ -385,7 +396,7 @@ function AdminDashboard({ onLogout }) {
       showFeedback('Project created.');
     } catch (error) {
       setProjectErrors(error.fields || {});
-      showFeedback(error.message || 'Failed to create project.', 'error');
+      showFeedback(formatApiErrorMessage(error, 'Failed to create project.'), 'error');
     }
   };
 
@@ -412,7 +423,7 @@ function AdminDashboard({ onLogout }) {
       showFeedback('Experience created.');
     } catch (error) {
       setExperienceErrors(error.fields || {});
-      showFeedback(error.message || 'Failed to create experience.', 'error');
+      showFeedback(formatApiErrorMessage(error, 'Failed to create experience.'), 'error');
     }
   };
 
@@ -445,7 +456,7 @@ function AdminDashboard({ onLogout }) {
       showFeedback(`Project "${projectDraft.title}" saved.`);
     } catch (error) {
       setProjectDraftErrors(error.fields || {});
-      showFeedback(error.message || 'Failed to save project.', 'error');
+      showFeedback(formatApiErrorMessage(error, 'Failed to save project.'), 'error');
     }
   };
 
@@ -477,7 +488,7 @@ function AdminDashboard({ onLogout }) {
       showFeedback(`Experience "${experienceDraft.title}" saved.`);
     } catch (error) {
       setExperienceDraftErrors(error.fields || {});
-      showFeedback(error.message || 'Failed to save experience.', 'error');
+      showFeedback(formatApiErrorMessage(error, 'Failed to save experience.'), 'error');
     }
   };
 
