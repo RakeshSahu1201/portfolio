@@ -44,6 +44,7 @@ const {
 // Pure function to create Express app with all middleware
 const createApp = (dependencies) => {
   const app = express();
+  app.set('trust proxy', 1);
 
   // Security middleware
   app.use(helmet());
