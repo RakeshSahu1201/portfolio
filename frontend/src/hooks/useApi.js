@@ -1,6 +1,23 @@
 import { useState, useCallback, useEffect } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const ADMIN_TOKEN_KEY = 'adminToken';
+
+const getStoredAuthToken = () => {
+  if (typeof window === 'undefined') return '';
+  return window.localStorage.getItem(ADMIN_TOKEN_KEY) || '';
+};
+
+const setStoredAuthToken = (token) => {
+  if (typeof window === 'undefined') return;
+
+  if (token) {
+    window.localStorage.setItem(ADMIN_TOKEN_KEY, token);
+    return;
+  }
+
+  window.localStorage.removeItem(ADMIN_TOKEN_KEY);
+};
 
 /**
  * Pure function to make API requests with error handling
@@ -27,6 +44,11 @@ const apiCall = async (endpoint, options = {}) => {
 
   if (body) {
     config.body = JSON.stringify(body);
+  }
+
+  const token = getStoredAuthToken();
+  if (token && !config.headers.Authorization) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   const response = await fetch(`${API_URL}${endpoint}`, config);
@@ -261,7 +283,7 @@ export const useContact = () => {
  * Custom hook for authentication
  */
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(getStoredAuthToken()));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -274,10 +296,12 @@ export const useAuth = () => {
         method: 'POST',
         body: { email, password },
       });
+      setStoredAuthToken(data.token);
       setIsAuthenticated(true);
       return data.token;
     } catch (err) {
       console.error('Login failed:', err);
+      setStoredAuthToken('');
       setError(err.message);
       setIsAuthenticated(false);
       return null;
@@ -289,9 +313,11 @@ export const useAuth = () => {
   const logout = useCallback(async () => {
     try {
       await apiCall('/api/auth/logout', { method: 'POST' });
-      setIsAuthenticated(false);
     } catch (err) {
       console.error('Logout failed:', err);
+    } finally {
+      setStoredAuthToken('');
+      setIsAuthenticated(false);
     }
   }, []);
 
@@ -348,3 +374,4 @@ export const useContactMessages = () => {
 };
 
 export { apiCall };
+export { getStoredAuthToken };

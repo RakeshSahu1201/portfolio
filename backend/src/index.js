@@ -46,6 +46,11 @@ const createApp = (dependencies) => {
   const app = express();
   app.set('trust proxy', 1);
 
+  // Lightweight health probe for uptime checks and cron bots.
+  app.get('/healthz', (req, res) => {
+    res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+  });
+
   // Security middleware
   app.use(helmet());
   app.use(cors({

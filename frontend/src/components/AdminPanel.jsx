@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import {
+  getStoredAuthToken,
   useAbout,
   useAuth,
   useContactMessages,
@@ -783,7 +784,7 @@ function AdminDashboard({ onLogout }) {
         <h2 style={styles.sectionTitle}>Contact Messages</h2>
         {messagesError && <div style={{ ...styles.message, ...styles.error }}>{messagesError}</div>}
         <div style={styles.list}>
-          {!messagesLoading && sortedMessages.length === 0 && <div style={styles.card}>No messages yet.</div>}
+          {!messagesLoading && !messagesError && sortedMessages.length === 0 && <div style={styles.card}>No messages yet.</div>}
           {sortedMessages.map((message) => (
             <div key={message.id} style={styles.item}>
               <h3 style={styles.itemTitle}>{message.subject}</h3>
@@ -818,7 +819,7 @@ function AdminDashboard({ onLogout }) {
 }
 
 export default function AdminPanel() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(getStoredAuthToken()));
 
   if (!isAuthenticated) {
     return <AdminLogin onSuccess={() => setIsAuthenticated(true)} />;
